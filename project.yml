@@ -1,0 +1,17 @@
+title: Greek Evaluation
+description: >
+  Evaluation workflows for Ancient Greek language pipelines.
+
+directories: ["assets", "corpus", "scripts"]
+
+commands:
+  - name: install
+  # DO stuff
+  - name: fetch_assets
+  # DO stuff
+  - name: preprocess
+  # DO stuff
+  - name: evaluate_cltk
+  # DO stuff
+  - name: evaluate_stanza
+  # DO stuff
