@@ -11,6 +11,8 @@ assets/
 corpus/
 environments/
 predictions/
+models/
+project.lock
 
 # Distribution / packaging
 .Python
