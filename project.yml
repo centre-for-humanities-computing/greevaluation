@@ -7,6 +7,7 @@ directories: ["assets", "corpus", "scripts"]
 commands:
   - name: install
     script:
+      - "bash scripts/serverside_deps.sh"
       - "bash scripts/create_environments.sh"
   - name: fetch_assets
     help: Fetches treebank data in spaCy binary and coNLL.
