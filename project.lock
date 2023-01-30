@@ -1,0 +1,16 @@
+fetch_assets:
+  cmd: python -m spacy run fetch_assets
+  script:
+    - bash scripts/fetch_treebanks.sh
+  deps: []
+  outs: []
+  spacy_version: 3.4.4
+  spacy_git_version: Unknown
+preprocess:
+  cmd: python -m spacy run preprocess
+  script:
+    - bash scripts/prepare_treebanks.sh
+  deps: []
+  outs: []
+  spacy_version: 3.4.4
+  spacy_git_version: Unknown

@@ -8,9 +8,13 @@ commands:
   - name: install
   # DO stuff
   - name: fetch_assets
-  # DO stuff
+    help: Fetches treebank data in spaCy binary and coNLL.
+    script:
+      - "bash scripts/fetch_treebanks.sh"
   - name: preprocess
-  # DO stuff
+    help: Preprocesses fetched assets
+    script:
+      - "bash scripts/prepare_treebanks.sh"
   - name: evaluate_cltk
   # DO stuff
   - name: evaluate_stanza
