@@ -2,7 +2,7 @@ title: Greek Evaluation
 description: >
   Evaluation workflows for Ancient Greek language pipelines.
 
-directories: ["assets", "corpus", "scripts"]
+directories: ["assets", "corpus", "scripts", "predictions"]
 
 commands:
   - name: install

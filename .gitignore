@@ -10,6 +10,7 @@ __pycache__/
 assets/
 corpus/
 environments/
+predictions/
 
 # Distribution / packaging
 .Python
