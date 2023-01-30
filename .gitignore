@@ -9,6 +9,7 @@ __pycache__/
 # SpaCy Project folders
 assets/
 corpus/
+environments/
 
 # Distribution / packaging
 .Python

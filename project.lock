@@ -14,3 +14,11 @@ preprocess:
   outs: []
   spacy_version: 3.4.4
   spacy_git_version: Unknown
+install:
+  cmd: python -m spacy run install
+  script:
+    - bash scripts/create_environments.sh
+  deps: []
+  outs: []
+  spacy_version: 3.4.4
+  spacy_git_version: Unknown
