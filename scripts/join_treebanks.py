@@ -5,11 +5,11 @@ Purpose = Literal["dev", "test", "train"]
 PURPOSES: List[Purpose] = ["dev", "test", "train"]
 
 
-def get_conllu_paths(purpose: Purpose) -> List[str]:
+def get_paths(purpose: Purpose, file_type: str) -> List[str]:
     """Returns all conllu files for the given purpose."""
     return [
-        f"assets/treebanks/proiel/{purpose}.conllu",
-        f"assets/treebanks/perseus/{purpose}.conllu",
+        f"assets/treebanks/proiel/{purpose}.{file_type}",
+        f"assets/treebanks/perseus/{purpose}.{file_type}",
     ]
 
 
@@ -23,13 +23,14 @@ def stream_files(paths: Iterable[str]) -> Iterable[str]:
 def main() -> None:
     print("Joining treebanks:")
     for purpose in PURPOSES:
-        print(f" - {purpose}")
-        paths = get_conllu_paths(purpose=purpose)
-        conllu_contents = stream_files(paths)
-        joint_conllu = "".join(conllu_contents)
-        out_path = f"assets/treebanks/joint/{purpose}.conllu"
-        with open(out_path, "w") as out_file:
-            out_file.write(joint_conllu)
+        for file_type in ["conllu", "txt"]:
+            print(f" - {purpose}")
+            paths = get_paths(purpose=purpose, file_type=file_type)
+            conllu_contents = stream_files(paths)
+            joint_conllu = "".join(conllu_contents)
+            out_path = f"assets/treebanks/joint/{purpose}.{file_type}"
+            with open(out_path, "w") as out_file:
+                out_file.write(joint_conllu)
     print("DONE")
 
 
