@@ -35,7 +35,7 @@ lemma = LemmatizerModel.pretrained("lemma_proiel", "grc") \
 pipeline = Pipeline(stages=[document, sentence, tokenizer, lemma])
 
 # --- data ---
-TEXT_DIR = "/work/greevaluation/corpus/text"
+TEXT_DIR = "/work/greevaluation/corpus/text_sents"
 
 # for dataset in ["proiel", "perseus", "joint"]:
 #     print(f" - Predicting: {dataset}")
@@ -46,19 +46,13 @@ TEXT_DIR = "/work/greevaluation/corpus/text"
 path = os.path.join(TEXT_DIR, 'proiel.txt')
 with open(path) as fin:
     text = fin.read()
-    # text = fin.readlines()
 
+# List[List[single str]]
+sentences = text.split('\n')
+sentences = [[sent] for sent in sentences]
 
 # --- inference ---
-# List[List[single str]]
-
-text_sample = "Δελφῶν οἶδα ἐγὼ οὕτω ἀκούσας γενέσθαι"
-senteces = [
-    [text_sample],
-    [text_sample]
-]
-
-data = spark.createDataFrame([[text]]).toDF("text")
+data = spark.createDataFrame(sentences).toDF("text")
 output = pipeline.fit(data).transform(data)
 
 # --- export ---
