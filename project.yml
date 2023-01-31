@@ -17,6 +17,8 @@ commands:
     script:
       - "bash scripts/prepare_treebanks.sh"
   - name: evaluate_cltk
-  # DO stuff
+    help: Evaluates CLTK
+    script:
+      - "bash scripts/evaluate_cltk.sh"
   - name: evaluate_stanza
   # DO stuff

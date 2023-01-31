@@ -11,6 +11,7 @@ assets/
 corpus/
 environments/
 predictions/
+metrics/
 
 # Distribution / packaging
 .Python
