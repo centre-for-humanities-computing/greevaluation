@@ -42,4 +42,4 @@ output = pipeline.fit(data).transform(data)
 
 # --- export ---
 lemmas = [row.result for row in output.select("lemma.result").collect()]
-
+pos = [row.result for row in output.select("pos.result").collect()]
