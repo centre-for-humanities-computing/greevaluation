@@ -13,7 +13,7 @@ do
     # evaluate test fold in each corpus
     for CORPUS in "joint" "perseus" "proiel"
     do
-        mkdir -p "metrics/$STANZA_MODEL/$VERSION/$CORPUS"
+        mkdir -p "metrics/$STANZA_MODEL/$VERSION"
         python3 -m spacy benchmark accuracy \
             "models/$STANZA_MODEL" \
             "corpus/binary/$CORPUS.spacy" \
