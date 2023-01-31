@@ -12,27 +12,12 @@ from sparknlp.base import *
 from sparknlp.pretrained import ResourceDownloader
 from sparknlp.training import CoNLLU
 
+from scripts.spark.spark_pipelines import pipe_spark_perseus, pipe_spark_proiel
 
-# --- pipeline components ----
+
+# --- pipeline initialization ----
 spark = sparknlp.start()
-
-document = DocumentAssembler() \
-    .setInputCol("text") \
-    .setOutputCol("document")
-
-sentence = SentenceDetectorDLModel.pretrained("sentence_detector_dl", "xx") \
-    .setInputCols(["document"]) \
-    .setOutputCol("sentence")
-
-tokenizer = Tokenizer() \
-    .setInputCols(["sentence"]) \
-    .setOutputCol("token") 
-
-lemma = LemmatizerModel.pretrained("lemma_proiel", "grc") \
-    .setInputCols(["token"]) \
-    .setOutputCol("lemma")
-
-pipeline = Pipeline(stages=[document, sentence, tokenizer, lemma])
+pipeline = pipe_spark_perseus()
 
 # --- data ---
 TEXT_DIR = "/work/greevaluation/corpus/text_sents"
