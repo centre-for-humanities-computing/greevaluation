@@ -2,23 +2,30 @@ title: Greek Evaluation
 description: >
   Evaluation workflows for Ancient Greek language pipelines.
 
-directories: ["assets", "corpus", "scripts", "predictions", "metrics"]
+directories: ["assets", "corpus", "scripts", "predictions", "models", "metrics"]
 
 commands:
   - name: install
     script:
+      - "bash scripts/serverside_deps.sh"
       - "bash scripts/create_environments.sh"
+
   - name: fetch_assets
     help: Fetches treebank data in spaCy binary and coNLL.
     script:
       - "bash scripts/fetch_treebanks.sh"
+
   - name: preprocess
     help: Preprocesses fetched assets
     script:
       - "bash scripts/prepare_treebanks.sh"
+
   - name: evaluate_cltk
     help: Evaluates CLTK
     script:
       - "bash scripts/evaluate_cltk.sh"
   - name: evaluate_stanza
-  # DO stuff
+    help: Get stanza models, run them on the test folds
+    script:
+      - "bash scripts/stanza/evaluate_stanza.sh"
+      - "python3 scripts compare_models.py"
