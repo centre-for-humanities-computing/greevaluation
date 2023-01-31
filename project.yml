@@ -21,8 +21,9 @@ commands:
       - "bash scripts/prepare_treebanks.sh"
 
   - name: evaluate_cltk
-  # DO stuff
-
+    help: Evaluates CLTK
+    script:
+      - "bash scripts/evaluate_cltk.sh"
   - name: evaluate_stanza
     help: Get stanza models, run them on the test folds
     script:
