@@ -26,6 +26,5 @@ commands:
   - name: evaluate_stanza
     help: Get stanza models, run them on the test folds
     script:
-      - "python3 scripts/stanza/fetch_stanza_grc.py" 
       - "bash scripts/stanza/evaluate_stanza.sh"
       - "python3 scripts compare_models.py"
