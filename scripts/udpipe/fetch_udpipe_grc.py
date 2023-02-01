@@ -11,10 +11,11 @@ if not os.path.exists('models/udpipe-perseus') and not os.path.exists("models/ud
     spacy_udpipe.download("grc-perseus")
     spacy_udpipe.download("grc-proiel")
 
-    # load as spacy models
-    model_perseus = spacy_udpipe.load("grc-perseus")
-    model_proiel = spacy_udpipe.load("grc-proiel")
+    # SERIALIZATION DOESN'T WORK WITH spacy-udpipe
+    # # load as spacy models
+    # model_perseus = spacy_udpipe.load("grc-perseus")
+    # model_proiel = spacy_udpipe.load("grc-proiel")
 
-    # serialize
-    model_perseus.to_disk('models/udpipe-perseus')
-    model_proiel.to_disk('models/udpipe-proiel')
+    # # serialize
+    # model_perseus.to_disk('models/udpipe-perseus')
+    # model_proiel.to_disk('models/udpipe-proiel')
