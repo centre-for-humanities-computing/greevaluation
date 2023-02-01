@@ -1,13 +1,15 @@
-import os
-from typing import Dict, Any
-import re
 import json
+import os
+import re
+from pathlib import Path
+from typing import Any, Dict
 
+import cltk
 import spacy
 from spacy.scorer import Scorer
+from spacy.tokens import DocBin
 from spacy.training import Example
 from spacy.vocab import Vocab
-from spacy.tokens import DocBin
 
 PRED_DIR = "predictions/cltk/"
 GOLD_DIR = "corpus/binary"
@@ -68,19 +70,22 @@ def main() -> None:
     reference_model = spacy.load("grc_dep_treebanks_trf")
     scorer = Scorer(nlp=reference_model)
     # We go throught the three datasets
+    version = str(cltk.__version__).split()[-1]
+    out_dir = os.path.join(EVALUATION_DIR, "cltk", version)
+    Path(out_dir).mkdir(parents=True, exist_ok=True)
     for dataset in ["perseus", "proiel", "joint"]:
-        pred_path = os.path.join(PRED_DIR, f"{dataset}.spacy")
-        gold_path = os.path.join(GOLD_DIR, f"{dataset}.spacy")
+        pred_path = os.path.join(PRED_DIR, f"{dataset}_fixed.spacy")
+        gold_path = os.path.join(GOLD_DIR, f"{dataset}_norm.spacy")
         pred_db = DocBin().from_disk(pred_path)
         gold_db = DocBin().from_disk(gold_path)
-        pred_docs = pred_db.get_docs(Vocab())
-        gold_docs = gold_db.get_docs(Vocab())
+        pred_docs = pred_db.get_docs(reference_model.vocab)
+        gold_docs = gold_db.get_docs(reference_model.vocab)
         examples = [
             Example(predicted=pred, reference=gold)
             for pred, gold in zip(pred_docs, gold_docs)
         ]
         scores = scorer.score(examples=examples)
-        out_path = os.path.join(EVALUATION_DIR, "cltk", f"{dataset}.json")
+        out_path = os.path.join(out_dir, f"{dataset}.json")
         write_scores(scores, path=out_path)
 
 

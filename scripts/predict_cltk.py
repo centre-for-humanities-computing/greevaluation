@@ -16,7 +16,7 @@ def main() -> None:
         with open(path) as in_file:
             text = in_file.read()
         doc = nlp.analyze(text)
-        print(f" - Saving")
+        print(" - Saving")
         save_conllu(doc, path=os.path.join(OUT_DIR, f"{dataset}.conllu"))
     print("DONE")
 
