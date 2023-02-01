@@ -12,7 +12,6 @@ corpus/
 environments/
 predictions/
 metrics/
-models/
 project.lock
 
 # Distribution / packaging
