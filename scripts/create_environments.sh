@@ -16,6 +16,7 @@ echo "Installing VENV: stanza"
 python3 -m venv environments/stanza
 source environments/stanza/bin/activate
 pip install -r "requirements_stanza.txt"
+pip install https://huggingface.co/janko/grc_dep_treebanks_trf/resolve/main/grc_dep_treebanks_trf-any-py3-none-any.whl
 deactivate
 
 # udpipe stuff
