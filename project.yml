@@ -37,5 +37,5 @@ commands:
 
   - name: evaluate_homercy
     help: Evaluate homerCy models on the test sets, generate metrics report
-    scripts:
+    script:
       - "bash scripts/homercy/evaluate_homercy.sh"
