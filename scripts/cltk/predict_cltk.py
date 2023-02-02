@@ -2,7 +2,7 @@
 import os
 
 from cltk import NLP
-from utils.cltk import save_conllu
+from utils import save_conllu
 
 RAW_DIR = "corpus/text"
 OUT_DIR = "predictions/cltk"

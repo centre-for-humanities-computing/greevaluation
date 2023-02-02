@@ -3,9 +3,7 @@ texts with CLTK's normalizer and fixes CLTK's punctuation.
 """
 import os
 
-from cltk.alphabet.grc.grc import normalize_grc
-
-from utils.cltk import load_conllu, fix_punctuation
+from utils import load_conllu, fix_punctuation
 
 CONLLU_PATH = "corpus/conllu"
 
