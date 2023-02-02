@@ -34,13 +34,11 @@ for model_dir in md.iterdir():
     for version_dir in model_dir.iterdir():
         model_version = version_dir.parts[-1]
         # iterate though evaluation corpora
-        for corpus_dir in version_dir.iterdir():
+        for corpus_file in version_dir.iterdir():
             # name of the test corpus
-            eval_corpus = corpus_dir.parts[-1]
-            # name of json file with metrics
-            metric_file = corpus_dir.stem
+            eval_corpus = corpus_file.stem
 
-            with open(metric_file) as fin:
+            with open(corpus_file) as fin:
                 metrics = json.load(fin)
             
             # initialize thing
@@ -48,7 +46,6 @@ for model_dir in md.iterdir():
                 'model': model_name,
                 'version': model_version,
                 'corpus': eval_corpus,
-                'checkpoint': checkpoint_name,
             }
 
             # append metrics
