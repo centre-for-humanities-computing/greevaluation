@@ -34,3 +34,8 @@ commands:
     help: Get udpipe models, run them on test folds, generate report
     script:
       - "bash scripts/udpipe/evaluate_udpipe.sh"
+
+  - name: evaluate_homercy
+    help: Evaluate homerCy models on the test sets, generate metrics report
+    scripts:
+      - "bash scripts/homercy/evaluate_homercy.sh"
