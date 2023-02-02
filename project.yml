@@ -23,7 +23,7 @@ commands:
   - name: evaluate_cltk
     help: Evaluates CLTK
     script:
-      - "bash scripts/evaluate_cltk.sh"
+      - "bash scripts/cltk/evaluate_cltk.sh"
 
   - name: evaluate_stanza
     help: Get stanza models, run them on test folds, generate repot

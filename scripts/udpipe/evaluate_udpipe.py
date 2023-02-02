@@ -1,33 +1,63 @@
 """
-Evaluate udpipe models using spacy.Scorer
+Generate predictions of the test sets
 """
-import os
-import re
-import json
-from typing import Any, Dict
 
+from typing import Optional, Dict, Any
+import os
 import spacy
 from spacy.scorer import Scorer
-from spacy.tokens import DocBin
-from spacy.training import Example
-from spacy.vocab import Vocab
+import spacy_udpipe
+import re
+from wasabi import Printer
+from spacy import util
+from spacy.training.corpus import Corpus
+from pathlib import Path
+from spacy.cli.evaluate import handle_scores_per_type
+from spacy.language import Language
+import srsly
 
 
-PRED_DIR = "predictions/udpipe"
-GOLD_DIR = "corpus/binary"
-EVALUATION_DIR = "metrics"
-
-
-def write_scores(scores: Dict[str, Any], path: str) -> None:
-    """Writes scores to disk in spacy's json format.
-
-    NOTE
-    ----
-    This is note my code, I took it from spaCy directly.
-    """
+def evaluate(
+    nlp: Language,
+    data_path: str,
+    output: str,
+    gold_preproc: bool = False,
+    silent: bool = True,
+    spans_key: str = "sc",
+) -> Dict[str, Any]:
+    msg = Printer(no_print=silent, pretty=not silent)
+    data_path = util.ensure_path(data_path)
+    output_path = util.ensure_path(output)
+    if not Path(data_path).exists():
+        msg.fail("Evaluation data not found", data_path, exits=1)
+    corpus = Corpus(data_path, gold_preproc=gold_preproc)
+    dev_dataset = list(corpus(nlp))
+    reference_model = spacy.load("grc_dep_treebanks_trf")
+    scorer = Scorer(nlp=reference_model)
+    scores = nlp.evaluate(dev_dataset, scorer=scorer)
+    metrics = {
+        "TOK": "token_acc",
+        "TAG": "tag_acc",
+        "POS": "pos_acc",
+        "MORPH": "morph_acc",
+        "LEMMA": "lemma_acc",
+        "UAS": "dep_uas",
+        "LAS": "dep_las",
+        "NER P": "ents_p",
+        "NER R": "ents_r",
+        "NER F": "ents_f",
+        "TEXTCAT": "cats_score",
+        "SENT P": "sents_p",
+        "SENT R": "sents_r",
+        "SENT F": "sents_f",
+        "SPAN P": f"spans_{spans_key}_p",
+        "SPAN R": f"spans_{spans_key}_r",
+        "SPAN F": f"spans_{spans_key}_f",
+        "SPEED": "speed",
+    }
     results = {}
     data = {}
-    for metric, key in METRICS.items():
+    for metric, key in metrics.items():
         if key in scores:
             if key == "cats_score":
                 metric = (
@@ -41,38 +71,37 @@ def write_scores(scores: Dict[str, Any], path: str) -> None:
             else:
                 results[metric] = "-"
             data[re.sub(r"[\s/]", "_", key.lower())] = scores[key]
-    with open(path, "w") as out_file:
-        json.dump(data, out_file)
+
+    msg.table(results, title="Results")
+    data = handle_scores_per_type(
+        scores, data, spans_key=spans_key, silent=silent
+    )
+
+    if output_path is not None:
+        srsly.write_json(output_path, data)
+        msg.good(f"Saved results to {output_path}")
+    return data
+
+
+GOLD_DIR = "corpus/binary"
+OUT_DIR = "metrics"
+UDPIPE_VERSION = "2.0.0"
 
 
 def main():
-    reference_model = spacy.load("grc_dep_treebanks_trf")
-    scorer = Scorer(nlp=reference_model)
-
-    # version hardcoded following
-    # https://lindat.mff.cuni.cz/repository/xmlui/handle/11234/1-3131
-    version = "2.5.0"
-
-    for model in ["grc-perseus", "grc-proiel"]:
-
-        out_dir = os.path.join(EVALUATION_DIR, model, version)
-        if not os.path.exists(out_dir):
-            os.makedirs(out_dir)
-
-        for dataset in ["perseus", "proiel", "joint"]:
-            pred_path = os.path.join(PRED_DIR, f"{model}_{dataset}.spacy")
+    for model_name in ["grc-perseus", "grc-proiel"]:
+        for dataset in ["proiel", "perseus", "joint"]:
+            print(f" - Evaluating: {dataset}")
+            nlp = spacy_udpipe.load(model_name)
             gold_path = os.path.join(GOLD_DIR, f"{dataset}.spacy")
-            pred_db = DocBin().from_disk(pred_path)
-            gold_db = DocBin().from_disk(gold_path)
-            pred_docs = pred_db.get_docs(reference_model.vocab)
-            gold_docs = gold_db.get_docs(reference_model.vocab)
-            examples = [
-                Example(predicted=pred, reference=gold)
-                for pred, gold in zip(pred_docs, gold_docs)
-            ]
-            scores = scorer.score(examples=examples)
+            out_dir = os.path.join(
+                OUT_DIR,
+                f"udpipe-{model_name}",
+                UDPIPE_VERSION,
+            )
+            Path(out_dir).mkdir(parents=True, exist_ok=True)
             out_path = os.path.join(out_dir, f"{dataset}.json")
-            write_scores(scores, path=out_path)
+            evaluate(nlp, data_path=gold_path, output=out_path)
 
 
 if __name__ == "__main__":
