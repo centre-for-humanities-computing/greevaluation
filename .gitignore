@@ -11,9 +11,11 @@ assets/
 corpus/
 environments/
 predictions/
-metrics/
 models/
 project.lock
+
+# Marton's shit
+mess/
 
 # Distribution / packaging
 .Python

@@ -23,9 +23,14 @@ commands:
   - name: evaluate_cltk
     help: Evaluates CLTK
     script:
-      - "bash scripts/evaluate_cltk.sh"
+      - "bash scripts/cltk/evaluate_cltk.sh"
+
   - name: evaluate_stanza
-    help: Get stanza models, run them on the test folds
+    help: Get stanza models, run them on test folds, generate repot
     script:
       - "bash scripts/stanza/evaluate_stanza.sh"
-      - "python3 scripts compare_models.py"
+
+  - name: evaluate_udpipe
+    help: Get udpipe models, run them on test folds, generate report
+    script:
+      - "bash scripts/udpipe/evaluate_udpipe.sh"
