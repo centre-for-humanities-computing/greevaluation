@@ -16,7 +16,7 @@ OUT_DIR = "predictions/bert_pos/"
 def load_model() -> SequenceTagger:
     """Loads model from list."""
     working_dir = os.getcwd()
-    os.chdir("models/Ancient-Greek-BERT")
+    os.chdir("models/bert_pos/Ancient-Greek-BERT")
     tagger = SequenceTagger.load("SuperPeitho-FLAIR-v2/final-model.pt")
     os.chdir(working_dir)
     return tagger
@@ -61,7 +61,7 @@ def main() -> None:
         table = load_conllu(os.path.join(GOLD_DIR, f"{dataset}.conllu"))
         sentences = sentencize(table)
         pred = pd.DataFrame()
-        pred[["form", "pos"]] = predict_tags(tagger, sentences)
+        pred["form"], pred["pos"] = predict_tags(tagger, sentences)
         print(" - Saving")
         pred.to_json(
             os.path.join(OUT_DIR, f"{dataset}.jsonl"),
