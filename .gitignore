@@ -14,6 +14,9 @@ predictions/
 models/
 project.lock
 
+# Marton's shit
+mess/
+
 # Distribution / packaging
 .Python
 build/
