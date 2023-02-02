@@ -25,3 +25,7 @@ source environments/udpipe/bin/activate
 pip install -r "requirements_udpipe.txt"
 pip install https://huggingface.co/janko/grc_dep_treebanks_trf/resolve/main/grc_dep_treebanks_trf-any-py3-none-any.whl
 deactivate
+
+# spark stuff
+echo "Installing VENV: spark"
+bash scripts/spark_env.sh
