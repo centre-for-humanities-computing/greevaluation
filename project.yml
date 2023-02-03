@@ -39,3 +39,8 @@ commands:
     help: Evaluate homerCy models on the test sets, generate metrics report
     script:
       - "bash scripts/homercy/evaluate_homercy.sh"
+
+  - name: evaluate_grecy
+    help: Evaluate greCy models on test folds, generate metrics report
+    script:
+      - "bash scripts/grecy/evaluate_grecy.sh"
