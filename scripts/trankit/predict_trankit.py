@@ -24,9 +24,10 @@ def main(pipeline, embedding) -> None:
         with open(path) as in_file:
             text = in_file.read()
         doc = nlp(text)
-        tokens = doc['sentences'][0]['tokens']
+        predictions = [sentence['tokens'] for sentence in doc['sentences']]
+        predictions_flat = [token for sentence in predictions for token in sentence]
         print(" - Saving")
-        save_conllu(tokens, path=os.path.join(OUT_DIR, f"{dataset}_{pipeline}_{embedding}.conllu"))
+        save_conllu(predictions_flat, path=os.path.join(OUT_DIR, f"{dataset}_{pipeline}_{embedding}.conllu"))
 
     print("DONE")
 
