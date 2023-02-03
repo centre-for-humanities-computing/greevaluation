@@ -11,6 +11,10 @@ def collect_sources(path: str) -> Iterable[str]:
             if line.startswith("# source = "):
                 source = line.removeprefix("# source = ").removesuffix("\n")
                 yield source
+            elif line.startswith("# sent_id = tlg"):
+                source = line.removeprefix("# sent_id = ").removesuffix("\n")
+                source = source.split("@")[0]
+                yield source
 
 
 def main() -> None:
