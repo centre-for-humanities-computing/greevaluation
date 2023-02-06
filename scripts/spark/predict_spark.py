@@ -51,6 +51,7 @@ def main() -> None:
         pred_conllu = fix_punctuation(pred_conllu)
         pred_conllu["ID"] = gold["ID"]
         pred_conllu["FORM"] = gold["FORM"]
+        pred_conllu["HEAD"] = gold["HEAD"]
         # Getting the columns in the right order
         # This also makes sure that all of them are there
         pred_conllu = pred_conllu[CONLLU_FIELDS]
