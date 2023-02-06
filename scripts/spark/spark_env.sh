@@ -11,6 +11,7 @@ source environments/spark/bin/activate
 
 # install requirements
 pip install -r requirements_spark.txt
+pip install https://huggingface.co/janko/grc_dep_treebanks_trf/resolve/main/grc_dep_treebanks_trf-any-py3-none-any.whl
 
 # export spark home
 SPARK_HOME=environments/spark/lib/python3.9/site-packages/pyspark
