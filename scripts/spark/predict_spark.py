@@ -63,11 +63,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-# written = 0
-
-# with open("perseus_pred.txt", "w") as f:
-# for i in range(len(lemmas)):
-# gold_lemma = gold["LEMMA"][i]
-# pred_lemma = lemmas[i]
-# f.write(f"Index: [{i}] | Gold: {gold_lemma} | Pred: {pred_lemma}\n")
