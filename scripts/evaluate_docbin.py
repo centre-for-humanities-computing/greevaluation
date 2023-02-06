@@ -92,3 +92,7 @@ def main() -> None:
     ]
     scores = scorer.score(examples=examples)
     write_scores(scores, path=out_path)
+
+
+if __name__ == "__main__":
+    main()
