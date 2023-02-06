@@ -44,3 +44,8 @@ commands:
     help: Evaluate greCy models on test folds, generate metrics report
     script:
       - "bash scripts/grecy/evaluate_grecy.sh"
+
+  - name: evaluate_spark
+    help: Evaluate SparkNLP models on test folds, generate metrics report
+    script:
+      - "bash scripts/spark/evaluate_spark.sh"
