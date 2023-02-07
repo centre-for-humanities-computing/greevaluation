@@ -3,8 +3,8 @@
 import os
 import argparse
 from trankit import Pipeline
-from util import to_conllu_df
-from conllu.file import write_conllu_df
+from scripts.trankit.util import to_conllu_df
+from scripts.conllu.file import write_conllu_df
 
 
 RAW_DIR = "corpus/text"

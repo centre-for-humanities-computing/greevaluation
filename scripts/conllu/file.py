@@ -67,7 +67,7 @@ def to_conllu_text(entries: Sequence[ConlluEntry]) -> str:
     for i_entry in range(n_entries):
         current = entries[i_entry]
         # Joining fields together with a tab
-        line = "\t".join(current[field] for field in CONLLU_FIELDS)
+        line = "\t".join(str(current[field]) for field in CONLLU_FIELDS)
         lines.append(line)
         # Adding empty line if sentence ends
         if is_sentence_end(i_entry, entries=entries):

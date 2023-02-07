@@ -1,5 +1,4 @@
-"""Script that normalizes tokens in the gold standard
-texts with CLTK's normalizer and fixes CLTK's punctuation.
+"""Script that fixes CLTK's punctuation.
 """
 import os
 
@@ -12,9 +11,6 @@ def main() -> None:
     for dataset in ["proiel", "perseus", "joint"]:
         in_path = os.path.join(CONLLU_PATH, f"{dataset}.conllu")
         gold_table = load_conllu(in_path)
-        gold_table["MISC"] = "_"
-        out_path = os.path.join(CONLLU_PATH, f"{dataset}_norm.conllu")
-        gold_table.to_csv(out_path, sep="\t", index=False, header=False)
         pred_table = load_conllu(
             os.path.join("predictions/cltk", f"{dataset}.conllu")
         )

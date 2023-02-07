@@ -1,7 +1,8 @@
 mkdir -p predictions/cltk
 source environments/cltk/bin/activate
+python3 scripts/conllu/remove_misc.py
 python3 scripts/cltk/predict_cltk.py
-python3 scripts/cltk/wrangle_cltk.py
+python3 scripts/cltk/fix_cltk.py
 deactivate
 
 for CORPUS in "joint" "perseus" "proiel"

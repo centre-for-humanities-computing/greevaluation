@@ -4,7 +4,7 @@ from typing import Dict, Optional, List
 from typing_extensions import TypedDict
 
 import pandas as pd
-from conllu.file import ConlluEntry, CONLLU_FIELDS
+from scripts.conllu.file import ConlluEntry, CONLLU_FIELDS
 
 
 def comply_value(value) -> str:
