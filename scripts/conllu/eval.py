@@ -4,7 +4,7 @@ import argparse
 import json
 from typing import Dict
 
-from scripts.conllu._eval import load_conllu_file, evaluate
+from _eval import load_conllu_file, evaluate
 
 
 def to_spacy_metrics(results) -> Dict[str, float]:
@@ -57,3 +57,7 @@ def main() -> None:
     results = to_spacy_metrics(results)
     # Writing them to given path
     write_metrics(metrics=results, path=args.dest)
+
+
+if __name__ == "__main__":
+    main()

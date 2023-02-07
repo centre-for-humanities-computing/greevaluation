@@ -3,7 +3,8 @@
 import os
 import argparse
 from trankit import Pipeline
-from util import save_conllu
+from util import to_conllu_df
+from conllu.file import write_conllu_df
 
 
 RAW_DIR = "corpus/text"
@@ -28,8 +29,9 @@ def main(pipeline_name: str, embedding_name: str) -> None:
             token for sentence in predictions for token in sentence
         ]
         print(" - Saving")
-        save_conllu(
-            predictions_flat,
+        pred_df = to_conllu_df(predictions_flat)
+        write_conllu_df(
+            pred_df,
             path=os.path.join(
                 OUT_DIR, f"{dataset}_{pipeline_name}_{embedding_name}.conllu"
             ),
