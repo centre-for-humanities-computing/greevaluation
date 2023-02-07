@@ -44,3 +44,8 @@ commands:
     help: Evaluate greCy models on test folds, generate metrics report
     script:
       - "bash scripts/grecy/evaluate_grecy.sh"
+
+  - name: evaluate_trankit
+    help: Evaluate Trankit models on test folds, generate metrics report
+    script:
+      - "bash scripts/trankit/evaluate_trankit.sh"
