@@ -35,27 +35,29 @@ for model_dir in md.iterdir():
         model_version = version_dir.parts[-1]
         # iterate though evaluation corpora
         for corpus_file in version_dir.iterdir():
-            # name of the test corpus
-            eval_corpus = corpus_file.stem
+            if corpus_file.with_suffix(".json"):
+                # name of the test corpus
+                eval_corpus = corpus_file.stem
 
-            with open(corpus_file) as fin:
-                metrics = json.load(fin)
-            
-            # initialize thing
-            out = {
-                'model': model_name,
-                'version': model_version,
-                'corpus': eval_corpus,
-            }
+                print(corpus_file)
+                with open(corpus_file) as fin:
+                    metrics = json.load(fin)
+                
+                # initialize thing
+                out = {
+                    'model': model_name,
+                    'version': model_version,
+                    'corpus': eval_corpus,
+                }
 
-            # append metrics
-            for key in keys_of_interest:
-                if key in metrics.keys():
-                    out.update({key: metrics[key]})
-                else:
-                    out.update({key: None})
+                # append metrics
+                for key in keys_of_interest:
+                    if key in metrics.keys():
+                        out.update({key: metrics[key]})
+                    else:
+                        out.update({key: None})
 
-            results.append(out)
+                results.append(out)
 
 
 results_table = pd.DataFrame(results)
