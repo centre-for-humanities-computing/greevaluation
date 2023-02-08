@@ -15,7 +15,7 @@ do
         for CORPUS in "joint" "perseus" "proiel"
         do
             python3 -m spacy convert predictions/trankit/${CORPUS}_${MODEL}_${EMBEDDING}.conllu predictions/trankit/ --converter conllu -n 10 
-            python3 -m scripts/evaluate_docbin.py predictions/trankit/${CORPUS}_${MODEL}_${EMBEDDING}.spacy corpus/binary/${CORPUS}_norm.spacy metrics/trankit_${MODEL}_${EMBEDDING}/${VERSION}/${CORPUS}.json
+            python3 scripts/evaluate_docbin.py predictions/trankit/${CORPUS}_${MODEL}_${EMBEDDING}.spacy corpus/binary/${CORPUS}_norm.spacy metrics/trankit_${MODEL}_${EMBEDDING}/${VERSION}/${CORPUS}.json
         done
     done
 done
