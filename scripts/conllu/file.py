@@ -41,7 +41,7 @@ def read_conllu_df(path: str) -> pd.DataFrame:
         lines = []
         # I only append lines from the file that are not comments.
         for line in conllu_file:
-            if not line.startswith("#"):
+            if not line.startswith("#") and line.strip():
                 lines.append(line)
     # Joining the lines
     conllu_text = "".join(lines)
@@ -60,7 +60,9 @@ def is_sentence_end(i_entry: int, entries: Sequence[ConlluEntry]) -> bool:
     )
 
 
-def to_conllu_text(entries: Sequence[ConlluEntry]) -> str:
+def to_conllu_text(
+    entries: Sequence[ConlluEntry], separate_lines: bool = True
+) -> str:
     """Turns a sequence of entries to a CONLL-U compliant string."""
     n_entries = len(entries)
     lines: List[str] = []
@@ -70,7 +72,7 @@ def to_conllu_text(entries: Sequence[ConlluEntry]) -> str:
         line = "\t".join(str(current[field]) for field in CONLLU_FIELDS)
         lines.append(line)
         # Adding empty line if sentence ends
-        if is_sentence_end(i_entry, entries=entries):
+        if is_sentence_end(i_entry, entries=entries) and separate_lines:
             lines.append("")
     # Joining lines together with line break
     text = "\n".join(lines)
@@ -88,7 +90,9 @@ def df_to_entries(df: pd.DataFrame) -> List[ConlluEntry]:
     return entries
 
 
-def write_conllu(entries: Sequence[ConlluEntry], path: str) -> None:
+def write_conllu(
+    entries: Sequence[ConlluEntry], path: str, separate_lines: bool = True
+) -> None:
     """Writes entries to a conllu file."""
     if not path.endswith(".conllu"):
         raise ValueError(
@@ -96,12 +100,14 @@ def write_conllu(entries: Sequence[ConlluEntry], path: str) -> None:
         )
     # Making sure directory exists
     Path(os.path.dirname(path)).mkdir(parents=True, exist_ok=True)
-    text = to_conllu_text(entries)
+    text = to_conllu_text(entries, separate_lines=separate_lines)
     with open(path, "w") as out_file:
         out_file.write(text)
 
 
-def write_conllu_df(df: pd.DataFrame, path: str) -> None:
+def write_conllu_df(
+    df: pd.DataFrame, path: str, separate_lines: bool = True
+) -> None:
     """Writes dataframe with entries to a conllu file."""
     entries = df_to_entries(df)
-    write_conllu(entries, path)
+    write_conllu(entries, path, separate_lines=separate_lines)

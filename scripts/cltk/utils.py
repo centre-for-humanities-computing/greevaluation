@@ -5,7 +5,7 @@ import pandas as pd
 from cltk.core.data_types import Doc, Word
 from typing_extensions import TypedDict
 
-from features import FEATURES
+from scripts.cltk.features import FEATURES
 
 # Entry order in CONLL-U files
 CONLLU_FIELDS = [

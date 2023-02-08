@@ -2,7 +2,8 @@
 import os
 
 from cltk import NLP
-from utils import save_conllu
+from scripts.cltk.utils import to_conllu
+from scripts.conllu.file import write_conllu_df
 
 RAW_DIR = "corpus/text"
 OUT_DIR = "predictions/cltk"
@@ -16,8 +17,11 @@ def main() -> None:
         with open(path) as in_file:
             text = in_file.read()
         doc = nlp.analyze(text)
+        doc_df = to_conllu(doc)
         print(" - Saving")
-        save_conllu(doc, path=os.path.join(OUT_DIR, f"{dataset}.conllu"))
+        write_conllu_df(
+            doc_df, path=os.path.join(OUT_DIR, f"{dataset}.conllu")
+        )
     print("DONE")
 
 

@@ -1,4 +1,4 @@
-# bash scripts/cltk/predict_cltk.sh
+bash scripts/cltk/predict_cltk.sh
 
 VERSION=1.1.6
 source environments/cltk/bin/activate
