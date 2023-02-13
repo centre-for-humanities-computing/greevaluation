@@ -34,6 +34,7 @@ source environments/homercy/bin/activate
 pip install -r "requirements_homercy.txt"
 pip install https://huggingface.co/janko/grc_dep_treebanks_trf/resolve/main/grc_dep_treebanks_trf-any-py3-none-any.whl
 pip install https://huggingface.co/janko/grc_dep_treebanks_sm/resolve/main/grc_dep_treebanks_sm-any-py3-none-any.whl
+pip install https://huggingface.co/janko/grc_dep_treebanks_xlm/resolve/main/grc_dep_treebanks_xlm-any-py3-none-any.whl
 deactivate
 
 # spark stuff
